@@ -1,0 +1,38 @@
+<form class="formClass" [formGroup]="search" (ngSubmit)="searchFilter(search);">
+    <div>
+        <mat-form-field class="example-full-width">
+            <input type="name" matInput formControlName="name">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field >
+            <mat-label>Filter By Date</mat-label>
+            <mat-date-range-input [rangePicker]="rangePicker">
+                <input matStartDate formControlName="minDate" placeholder="min date">
+                <input matEndDate formControlName="maxDate" placeholder="max date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePicker>
+                <mat-date-range-picker-actions>
+                    <button mat-button matDateRangePickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-button color="primary" [disabled]="!search.dirty || submitted" type="submit">Search</button>
+    </div>
+</form>
+<table class="table" id="customers">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Birth Date</th>
+      </tr>
+      <tr *ngFor="let val of data">
+        <th scope="row">{{val.resource.id}}</th>
+        <td>{{val.resource?.name ? val.resource?.name[0]?.given[0] + ' ' +val.resource?.name[0]?.family: ''}}</td>
+        <td>{{val.resource?.birthDate | date: 'short'}}</td>
+      </tr>
+  </table>
